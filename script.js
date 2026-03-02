@@ -35,6 +35,37 @@ function drawMatrix() {
 
 setInterval(drawMatrix, 35);
 
+// Floating skill bubbles
+const skills = document.querySelectorAll("#skillsCloud .skill");
+
+// Initial positions
+skills.forEach(skill => {
+    skill.x = Math.random() * (window.innerWidth - 80);
+    skill.y = Math.random() * 300; // hauteur initiale dans la div
+    skill.vx = (Math.random() - 0.5) * 0.5; // vitesse horizontale
+    skill.vy = (Math.random() - 0.5) * 0.3; // vitesse verticale
+    skill.style.left = skill.x + "px";
+    skill.style.top = skill.y + "px";
+});
+
+// Animation loop
+function animateSkills() {
+    skills.forEach(skill => {
+        skill.x += skill.vx;
+        skill.y += skill.vy;
+
+        // Rebondir sur les bords
+        if (skill.x < 0 || skill.x > window.innerWidth - 80) skill.vx *= -1;
+        if (skill.y < 0 || skill.y > 300 - 80) skill.vy *= -1;
+
+        skill.style.left = skill.x + "px";
+        skill.style.top = skill.y + "px";
+    });
+
+    requestAnimationFrame(animateSkills);
+}
+
+animateSkills();
 // Smooth scrolling
 document.querySelectorAll("nav a").forEach(anchor => {
     anchor.onclick = function(e) {
